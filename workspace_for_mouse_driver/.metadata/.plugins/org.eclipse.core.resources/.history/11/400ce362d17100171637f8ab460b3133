@@ -1,0 +1,88 @@
+/*
+===============================================================================
+Driver Name		:		airmouse
+Author			:		JKUMAR
+License			:		GPL
+Description		:		LINUX DEVICE DRIVER PROJECT
+===============================================================================
+*/
+
+#include"airmouse.h"
+#include <linux/fs.h>
+#include <asm/uaccess.h>
+#include <linux/pci.h>
+#include <linux/input.h>
+#include <linux/platform_device.h>
+
+struct input_dev *virmouse_input_dev;
+static struct platform_device *virmouse_dev; /* Device structure */
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("JKUMAR");
+
+/* Attach the sysfs write method */
+DEVICE_ATTR(vmevent, 0644, NULL, write_virmouse);
+
+/* Attribute Descriptor */
+static struct attribute *virmouse_attrs[] = {
+        &dev_attr_vmevent.attr,
+        NULL
+};
+
+/* Attribute group */
+static struct attribute_group virmouse_attr_group = {
+        .attrs = virmouse_attrs,
+};
+
+
+static int __init airmouse_init(void)
+{
+			/* Register a platform device */
+	        virmouse_dev = platform_device_register_simple("virmouse", -1, NULL, 0);
+	        if (IS_ERR(virmouse_dev)){
+	                printk ("virmouse_init: error\n");
+	                return PTR_ERR(virmouse_dev);
+	        }
+
+	        /* Create a sysfs node to read simulated coordinates */
+	        sysfs_create_group(&virmouse_dev->dev.kobj, &virmouse_attr_group);
+
+	        /* Allocate an input device data structure */
+	        virmouse_input_dev = input_allocate_device();
+	        if (!virmouse_input_dev) {
+	                printk("Bad input_allocate_device()\n");
+	                return -ENOMEM;
+	        }
+
+	        /* Announce that the virtual mouse will generate relative coordinates */
+	        set_bit(EV_REL, virmouse_input_dev->evbit);
+	        set_bit(REL_X, virmouse_input_dev->relbit);
+	        set_bit(REL_Y, virmouse_input_dev->relbit);
+	        set_bit(REL_WHEEL, virmouse_input_dev->relbit);
+
+
+	        /* Announce key event */
+	        set_bit(EV_KEY, virmouse_input_dev->evbit);
+	        set_bit(BTN_LEFT, virmouse_input_dev->keybit);
+	        set_bit(BTN_MIDDLE, virmouse_input_dev->keybit);
+	        set_bit(BTN_RIGHT, virmouse_input_dev->keybit);
+
+	        /* Register with the input subsystem */
+	        input_register_device(virmouse_input_dev);
+
+	        /* print messages in the dmesg */
+	        printk("Virtual Mouse Driver Initialized.\n");
+	return 0;
+}
+
+static void __exit airmouse_exit(void)
+{	
+	/* TODO Auto-generated Function Stub */
+
+	PINFO("EXIT\n");
+
+}
+
+module_init(airmouse_init);
+module_exit(airmouse_exit);
+

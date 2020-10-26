@@ -1,0 +1,12 @@
+
+**** Build of configuration Debug for project airmouse ****
+
+make --makefile=Makefile --directory=KERN_SRC modules 
+make: Entering directory `/home/jatin/Desktop/temp/workspace_for_mouse_driver/airmouse/KERN_SRC'
+make -C /lib/modules/4.4.0-31-generic/build/ M=/home/jatin/Desktop/temp/workspace_for_mouse_driver/airmouse/KERN_SRC modules
+make[1]: Entering directory `/usr/src/linux-headers-4.4.0-31-generic'
+  Building modules, stage 2.
+  MODPOST 1 modules
+make[1]: Leaving directory `/usr/src/linux-headers-4.4.0-31-generic'
+gcc userapp.c
+make: Leaving directory `/home/jatin/Desktop/temp/workspace_for_mouse_driver/airmouse/KERN_SRC'

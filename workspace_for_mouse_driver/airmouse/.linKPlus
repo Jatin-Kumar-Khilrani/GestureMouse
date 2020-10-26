@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<General-info>
+    <Driver-name>airmouse</Driver-name>
+    <Toolchain>Linux GCC</Toolchain>
+    <Architecture>x86_64</Architecture>
+    <hostMachineKernel>true</hostMachineKernel>
+    <Kernel-Version>/usr/src/linux-headers-4.4.0-31-generic</Kernel-Version>
+    <Licence>GPL</Licence>
+    <Author-name>jkumar</Author-name>
+    <location>/home/jatin/Desktop/temp/workspace_for_mouse_driver</location>
+    <wizardType>false</wizardType>
+    <wizardTypeInfo>false</wizardTypeInfo>
+</General-info>

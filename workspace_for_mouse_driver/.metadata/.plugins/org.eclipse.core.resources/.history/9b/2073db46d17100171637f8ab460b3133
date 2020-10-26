@@ -1,0 +1,34 @@
+/*
+===============================================================================
+Driver Name		:		airmouse
+Author			:		JKUMAR
+License			:		GPL
+Description		:		LINUX DEVICE DRIVER PROJECT
+===============================================================================
+*/
+
+#include"airmouse.h"
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("JKUMAR");
+
+static int __init airmouse_init(void)
+{
+	/* TODO Auto-generated Function Stub */
+
+	PINFO("INIT\n");
+
+	return 0;
+}
+
+static void __exit airmouse_exit(void)
+{	
+	/* TODO Auto-generated Function Stub */
+
+	PINFO("EXIT\n");
+
+}
+
+module_init(airmouse_init);
+module_exit(airmouse_exit);
+
